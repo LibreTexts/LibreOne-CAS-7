@@ -5,3 +5,11 @@ bin/**
 .history/**
 .github/**
 .git/**
+**/cas.properties
+etc/cas/config/cas.properties
+
+# Need to determine if these should be ignored
+*keystore
+etc/cas/*keystore
+etc/cas/config/*.keystore
+etc/cas/config/*.jwks

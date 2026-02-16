@@ -7,7 +7,12 @@ Set -Dlog4j2.contextSelector=org.apache.logging.log4j.core.selector.BasicContext
 <Configuration monitorInterval="5" packages="org.apereo.cas.logging">
     <Properties>
         <Property name="baseDir">/var/log</Property>
-        <Property name="cas.log.level">info</Property>
+        <Property name="cas.log.level">warn</Property>
+        <Property name="org.apereo.cas.persondir.log.level">warn</Property>
+        <Property name="org.apereo.cas.support.rest.log.level">warn</Property>
+        <Property name="org.apereo.cas.authentication.attribute">warn</Property>
+        <Property name="org.apereo.cas.services">warn</Property>
+        <!-- <Property name="org.apereo.cas.ticket.registry.RedisTicketRegistry">warn</Property> -->
         <Property name="spring.webflow.log.level">warn</Property>
         <Property name="spring.security.log.level">info</Property>
         <Property name="spring.cloud.log.level">warn</Property>

@@ -1,0 +1,11 @@
+version: '3'
+services:
+  cas:
+    build: .
+    ports:
+     - "8443:8443"
+     - "8080:8080"
+    volumes:
+      - ./etc/cas/config:/etc/cas/config
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

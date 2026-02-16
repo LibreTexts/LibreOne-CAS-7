@@ -42,4 +42,4 @@ EXPOSE 8080 8443
 
 ENV PATH $PATH:$JAVA_HOME/bin:.
 
-ENTRYPOINT ["java", "-server", "-noverify", "-Xmx2048M", "-XX:SharedArchiveFile=cas/cas.jsa", "-jar", "cas/cas.war"]
+ENTRYPOINT ["java", "-server", "-noverify", "-Xmx6144M", "-XX:SharedArchiveFile=cas/cas.jsa", "-jar", "cas/cas.war"]

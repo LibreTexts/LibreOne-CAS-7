@@ -47,3 +47,10 @@ apache-tomcat.zip
 config-metadata.properties
 node-modules
 package-lock.json
+
+### Custom ###
+etc/cas/config/variables.yaml
+etc/cas/config/*.keystore
+etc/cas/*keystore
+etc/cas/config/*.jwks
+etc/cas/config/cas.properties
