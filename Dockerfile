@@ -25,9 +25,6 @@ RUN java -Djarmode=tools -jar build/libs/cas.war extract \
 
 FROM $BASE_IMAGE AS cas
 
-LABEL "Organization"="Apereo"
-LABEL "Description"="Apereo CAS"
-
 RUN mkdir -p /etc/cas/config \
     && mkdir -p /etc/cas/services \
     && mkdir -p /etc/cas/saml;
@@ -38,6 +35,21 @@ COPY --from=overlay /cas-overlay/cas cas/
 COPY etc/cas/ /etc/cas/
 
 EXPOSE 8080 8443
+
+# Declared late so per-build values do not invalidate the layer cache above
+ARG VERSION=dev
+ARG BUILD_DATE
+ARG VCS_REF
+
+LABEL org.opencontainers.image.title="LibreOne CAS" \
+      org.opencontainers.image.description="LibreTexts single sign-on server, built on Apereo CAS" \
+      org.opencontainers.image.version="${VERSION}" \
+      org.opencontainers.image.created="${BUILD_DATE}" \
+      org.opencontainers.image.revision="${VCS_REF}" \
+      org.opencontainers.image.vendor="LibreTexts" \
+      org.opencontainers.image.documentation="https://github.com/LibreTexts/LibreOne-CAS-7/blob/master/README.md" \
+      org.opencontainers.image.source="https://github.com/LibreTexts/LibreOne-CAS-7" \
+      org.opencontainers.image.licenses="Apache-2.0"
 
 ENV PATH $PATH:$JAVA_HOME/bin:.
 

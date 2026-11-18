@@ -43,6 +43,9 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Record build date
+        id: date
+        run: echo "build_date=$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$GITHUB_OUTPUT"
       - name: Build and push by digest
         id: build
         uses: docker/build-push-action@53b7df96c91f9c12dcc8a07bcb9ccacbed38856a # v7.3.0
@@ -50,6 +53,10 @@ jobs:
           platforms: ${{ env.PLATFORM }}
           provenance: false
           outputs: type=image,name=ghcr.io/libretexts/libreone-cas,push-by-digest=true,name-canonical=true,push=true
+          build-args: |
+            VERSION=${{ inputs.version }}
+            BUILD_DATE=${{ steps.date.outputs.build_date }}
+            VCS_REF=${{ github.sha }}
 
   build_arm64:
     name: Build Docker image (arm64)
@@ -82,7 +89,11 @@ jobs:
           AMD64_DIGEST: ${{ needs.build_amd64.outputs.digest }}
           ARM64_DIGEST: ${{ needs.build_arm64.outputs.digest }}
         run: |
+          # GHCR reads multi-arch package metadata from index annotations, not per-arch labels
           docker buildx imagetools create \
+            --annotation "index:org.opencontainers.image.description=LibreTexts single sign-on server, built on Apereo CAS" \
+            --annotation "index:org.opencontainers.image.source=https://github.com/LibreTexts/LibreOne-CAS-7" \
+            --annotation "index:org.opencontainers.image.licenses=Apache-2.0" \
             -t "$IMAGE:$VERSION" \
             -t "$IMAGE:latest" \
             "$IMAGE@$AMD64_DIGEST" \
