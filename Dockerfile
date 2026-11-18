@@ -1,4 +1,4 @@
-ARG BASE_IMAGE="azul/zulu-openjdk:21"
+ARG BASE_IMAGE="amazoncorretto:21.0.13-al2023"
 
 FROM $BASE_IMAGE AS overlay
 
@@ -10,7 +10,9 @@ COPY ./src src/
 COPY ./gradle/ gradle/
 COPY ./gradlew ./settings.gradle ./build.gradle ./gradle.properties ./lombok.config ./
 
-RUN mkdir -p ~/.gradle \
+# gradlew needs xargs, which the AL2023 Corretto image omits
+RUN dnf install -y findutils && dnf clean all \
+    && mkdir -p ~/.gradle \
     && echo "org.gradle.daemon=false" >> ~/.gradle/gradle.properties \
     && echo "org.gradle.configureondemand=true" >> ~/.gradle/gradle.properties \
     && chmod 750 ./gradlew \

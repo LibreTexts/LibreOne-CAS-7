@@ -54,3 +54,10 @@ etc/cas/config/*.keystore
 etc/cas/*keystore
 etc/cas/config/*.jwks
 etc/cas/config/cas.properties
+
+
+### Agents ###
+agents/
+.codegraph/
+CLAUDE.md
+.mcp.json
