@@ -8,7 +8,7 @@ ARG EXT_BUILD_OPTIONS=""
 WORKDIR /cas-overlay
 COPY ./src src/
 COPY ./gradle/ gradle/
-COPY ./gradlew ./settings.gradle ./build.gradle ./gradle.properties ./lombok.config ./
+COPY ./gradlew ./settings.gradle ./build.gradle ./gradle.properties ./lombok.config ./*.lockfile ./
 
 # gradlew needs xargs, which the AL2023 Corretto image omits
 RUN dnf install -y findutils && dnf clean all \
